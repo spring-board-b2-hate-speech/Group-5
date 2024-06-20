@@ -1,0 +1,82 @@
+pip install gensim
+# Import necessary libraries
+from gensim.models import Word2Vec
+
+# Example sentences (a simple dataset)
+sentences = [
+    ['this', 'is', 'a', 'sentence'],
+    ['this', 'is', 'another', 'sentence'],
+    ['word2vec', 'creates', 'word', 'embeddings'],
+    ['we', 'are', 'learning', 'word2vec', 'technique']
+]
+
+# Train a Word2Vec model
+# vector_size: The number of dimensions of the embeddings
+# window: The maximum distance between the current and predicted word within a sentence
+# min_count: Ignores all words with total frequency lower than this
+# workers: The number of worker threads to train the model
+model = Word2Vec(sentences, vector_size=100, window=5, min_count=1, workers=4)
+
+# Save the model
+model.save("word2vec.model")
+
+# Load the model (if needed)
+# model = Word2Vec.load("word2vec.model")
+
+# Get vector for a word
+vector = model.wv['word2vec']
+print("Vector for 'word2vec':\n", vector)
+
+# Find similar words
+similar_words = model.wv.most_similar('word2vec')
+print("\nMost similar words to 'word2vec':\n", similar_words)
+
+# Get the vocabulary
+vocabulary = list(model.wv.key_to_index.keys())
+print("\nVocabulary:\n", vocabulary)
+python word2vec_example.py
+Expected Output:
+Vector for 'word2vec':
+This will be a 100-dimensional vector (since we set vector_size=100). The actual values will vary depending on the training data and initial randomization. Here’s an example of what it might look like:
+
+plaintext
+
+Vector for 'word2vec':
+[ 0.00431739  0.00283516 -0.00374823  0.00611417 -0.00489821  0.00937826
+ -0.00653721  0.00528444  0.00428335 -0.00233788  0.0045392  -0.00694609
+ -0.00845233  0.00411078 -0.00529044  0.00710826 -0.00911655  0.00520413
+  0.0074434  -0.00631416  0.00582393 -0.00897196  0.00841389  0.00548189
+ -0.00674938  0.00322159 -0.00568767 -0.00478712  0.00467573  0.00612182
+ -0.00427153 -0.00978647  0.0059375  -0.00414022 -0.00774329 -0.00631677
+  0.00652919 -0.0092421  -0.00478788  0.00553121  0.00856111 -0.00719614
+  0.00552257  0.00819767  0.00835718  0.00365084 -0.00493158 -0.00818343
+  0.00818754 -0.00482559  0.00437679 -0.0063214  -0.00392827  0.00732055
+ -0.00932468  0.00864134 -0.00933218  0.00686995  0.00498994 -0.00819194
+ -0.00416797 -0.00427388 -0.00814235  0.00615192 -0.00754632 -0.00357471
+  0.00786838  0.00326141 -0.00811694  0.0059405   0.00623628 -0.00426319
+  0.00898789  0.00755322 -0.00678444 -0.00883299 -0.00795427  0.00491574
+  0.00715735 -0.00561773 -0.00571198 -0.00810238  0.00861935 -0.00318909
+  0.00713863  0.00605627  0.00521158  0.00699616  0.00418954  0.00546931
+ -0.00635336 -0.00946368 -0.00724853 -0.00489299  0.00714593 -0.00814872
+  0.00938138  0.00541233 -0.00825977 -0.00872291]
+Most similar words to 'word2vec':
+Since the example sentences are very simple and repetitive, the similar words might not be very meaningful. Here’s an example:
+
+plaintext
+Most similar words to 'word2vec':
+[('creates', 0.12547661364078522),
+ ('we', 0.11280568689107895),
+ ('technique', 0.10579346865415573),
+ ('are', 0.10287706553936005),
+ ('learning', 0.0993194431066513),
+ ('embeddings', 0.09795630723237991),
+ ('sentence', 0.097712442278862),
+ ('is', 0.09542394429445267),
+ ('another', 0.09137859100103378),
+ ('a', 0.08665189146995544)]
+Vocabulary:
+The vocabulary will be a list of all unique words in the training sentences:
+
+plaintex
+Vocabulary:
+['this', 'is', 'a', 'sentence', 'another', 'word2vec', 'creates', 'word', 'embeddings', 'we', 
